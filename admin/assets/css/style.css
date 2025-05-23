@@ -453,3 +453,17 @@ body {
 .fade-in {
     animation: fadeIn 0.3s ease-in-out;
 }
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 56px; /* height of header */
+    left: -250px;
+    transition: all 0.3s;
+    z-index: 1030;
+}
+
+.sidebar.show {
+    left: 0;
+}

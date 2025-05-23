@@ -3,8 +3,7 @@ $pageTitle = "Dashboard";
 ?>
 <?php include 'includes/header.php'; ?>
 
-<?php include 'includes/sidebar.php'; ?>
-
+<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -102,10 +101,10 @@ $pageTitle = "Dashboard";
         </div>
     </div>
 
-    <div class="row mt-4">
-        <div class="col-lg-8">
+    <div class="row mt-12">
+        <div class="col-lg-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header d-flex justify-content-between align-items-center">
                     <h3>Recent Document Requests</h3>
                     <a href="documents.php" class="btn btn-sm btn-outline-primary">View All</a>
                 </div>
@@ -123,63 +122,65 @@ $pageTitle = "Dashboard";
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>#BRG-2023-001</td>
-                                    <td>Juan Dela Cruz</td>
-                                    <td>Barangay Clearance</td>
-                                    <td>May 15, 2023</td>
-                                    <td><span class="badge bg-warning">Pending</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary">View</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#BRG-2023-002</td>
-                                    <td>Maria Santos</td>
-                                    <td>Certificate of Residency</td>
-                                    <td>May 14, 2023</td>
-                                    <td><span class="badge bg-success">Completed</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary">View</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#BRG-2023-003</td>
-                                    <td>Pedro Reyes</td>
-                                    <td>Business Permit</td>
-                                    <td>May 13, 2023</td>
-                                    <td><span class="badge bg-danger">Rejected</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary">View</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#BRG-2023-004</td>
-                                    <td>Ana Lopez</td>
-                                    <td>Barangay ID</td>
-                                    <td>May 12, 2023</td>
-                                    <td><span class="badge bg-success">Completed</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary">View</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#BRG-2023-005</td>
-                                    <td>Carlos Garcia</td>
-                                    <td>Certificate of Indigency</td>
-                                    <td>May 11, 2023</td>
-                                    <td><span class="badge bg-warning">Pending</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary">View</button>
-                                    </td>
-                                </tr>
+                                <?php
+                                // Include DB connection
+                                require_once 'includes/db.php'; // Adjust path as needed
+
+                                // Query to get recent document requests, joining residents for full name
+                                $sql = "SELECT dr.residents_id, dr.document_id, dr.requested_at, dr.status, dr.request_code, CONCAT(r.first_name, ' ', r.last_name) AS resident_name, d.name AS document_type
+                                        FROM document_requests dr
+                                        JOIN residents r ON dr.residents_id = r.residents_id
+                                        JOIN document_types d ON dr.document_id = d.document_id
+                                        ORDER BY dr.requested_at DESC
+                                        LIMIT 5";  // Show 5 most recent requests
+
+                                $result = $conn->query($sql);
+
+                                if ($result && $result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        // Prepare badge class based on status
+                                        $status = strtolower($row['status']);
+                                        switch ($status) {
+                                            case 'completed':
+                                                $badgeClass = 'bg-success';
+                                                break;
+                                            case 'pending':
+                                                $badgeClass = 'bg-warning';
+                                                break;
+                                            case 'rejected':
+                                                $badgeClass = 'bg-danger';
+                                                break;
+                                            default:
+                                                $badgeClass = 'bg-secondary';
+                                        }
+
+                                        // Format date nicely 
+                                        $dateRequested = date('F j, Y', strtotime($row['requested_at']));
+                                        echo '<tr>';
+                                        echo '<td>#' . htmlspecialchars($row['request_code']) . '</td>';
+                                        echo '<td>' . htmlspecialchars($row['resident_name']) . '</td>';
+                                        echo '<td>' . htmlspecialchars($row['document_type']) . '</td>';
+                                        echo '<td>' . $dateRequested . '</td>';
+                                        echo '<td><span class="badge ' . $badgeClass . '">' . ucfirst($status) . '</span></td>';
+                                        echo '<td>
+                                                <a href="documents.php?id=' . $row['document_id'] . '" class="btn btn-sm btn-outline-primary">View</a>
+                                            </td>';
+                                        echo '</tr>';
+                                    }
+                                } else {
+                                    echo '<tr><td colspan="6" class="text-center">No document requests found.</td></tr>';
+                                }
+
+                                $conn->close();
+                                ?>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
+
+       <!-- <div class="col-lg-4">
             <div class="card">
                 <div class="card-header">
                     <h3>Recent Registered Residents</h3>
@@ -231,7 +232,7 @@ $pageTitle = "Dashboard";
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </main>
 <script src="https://kit.fontawesome.com/a076d05399.js" ;crossorigin="anonymous">
 <?php include 'includes/footer.php'; ?>

@@ -13,7 +13,8 @@
   <style>
     
     .hero {
-      background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('images/barangay-bg.jpg') center/cover no-repeat;
+      /*background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('images/barangay-bg.jpg') center/cover no-repeat;*/
+      background: linear-gradient(to right, #0033cc 0%, #990000 97%);
       color: white;
       height: 70vh;
       display: flex;
@@ -137,8 +138,8 @@
               <div class="card info-card shadow-sm p-3 text-center">
                 <div class="card-body">
                   <i class="bi bi-people-fill display-5 text-warning mb-3"></i>
-                  <h5 class="card-title">Community Services</h5>
-                  <p class="card-text">Stay updated with events, programs, and public service announcements.</p>
+                  <h5 class="card-title">Indigency</h5>
+                  <p class="card-text">Accessing medical assistance, and educational support.</p>
                 </div>
               </div>
             </div>
@@ -227,6 +228,7 @@
 
   <!-- Footer -->
  <?php include 'includes/footer.php'; ?>
+ <?php include 'includes/foot.php'; ?>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

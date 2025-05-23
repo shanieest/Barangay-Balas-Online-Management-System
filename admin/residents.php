@@ -2,7 +2,6 @@
 $pageTitle = "Residents Management";
 ?>
 <?php include 'includes/header.php'; ?>
-<?php include 'includes/sidebar.php'; ?>
 <?php include 'includes/residents_modal.php'; ?>
 
 <html>
@@ -156,7 +155,7 @@ $pageTitle = "Residents Management";
                                 $dateofbirth = new DateTime($dob);
                                 $today = new DateTime();
                                 $age = $today->diff($dateofbirth)->y;
-                                return $age;
+                                return $age; 
                             }
                             ?>
 

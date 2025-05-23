@@ -2,7 +2,6 @@
 $pageTitle = "Barangay Officials";
 ?>
 <?php include 'includes/header.php'; ?>
-<?php include 'includes/sidebar.php'; ?>
 
 <head>
     <meta charset="UTF-8">

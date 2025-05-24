@@ -1,82 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barangay Balas | <?php echo isset($pageTitle) ? $pageTitle : 'Admin'; ?></title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Barangay Balas | Admin</title>
 
-    <!-- Bootstrap 4.6 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+  <style>
+    body {
+      transition: padding-left 0.3s ease;
+    }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 220px;
+      height: 100vh;
+      background-color: #f8f9fa;
+      padding-top: 60px; /* height of header */
+      overflow-y: auto;
+      transition: transform 0.3s ease;
+      z-index: 1040;
+      transform: translateX(0);
+    }
+    .sidebar.hidden {
+      transform: translateX(-100%);
+    }
+    body.with-sidebar {
+      padding-left: 220px;
+    }
+    header.header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background-color: #ffffff;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 15px;
+      z-index: 1050;
+    }
+    main.main-content {
+      padding: 80px 20px 20px 20px; /* some top padding for header */
+    }
+    .logo img {
+      height: 40px;
+      margin-right: 10px;
+    }
+    .logo h1 {
+      margin: 0;
+      font-size: 1.25rem;
+    }
+    #sidebarToggle {
+      font-size: 1.5rem;
+      border: none;
+      background: none;
+      color: #333;
+    }
+  </style>
 </head>
 <body>
-    <header class="header d-flex justify-content-between align-items-center p-3">
-        <div class="d-flex align-items-center">
-            <div class="logo d-flex align-items-center">
-                <img src="assets/img/logo_balas.jpg" alt="Barangay Logo" style="height: 40px;" class="mr-2">
-                <h1 class="h5 m-0">Barangay Admin</h1>
-            </div>
-            <button id="sidebarToggle" class="btn btn-link mr-3">
-                <i class="fas fa-bars"></i>
-            </button>
+  <header class="header">
+    <div class="d-flex align-items-center">
+      <button id="sidebarToggle" aria-label="Toggle sidebar">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="logo d-flex align-items-center ms-3">
+        <img src="assets/img/logo_balas.jpg" alt="Barangay Logo" />
+        <h1>Barangay Admin</h1>
+      </div>
+    </div>
+    <div class="user-info dropdown">
+      <a
+        href="#"
+        class="d-flex align-items-center text-decoration-none dropdown-toggle"
+        id="userDropdown"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <img
+          src="assets/img/logo_balas.jpg"
+          alt="Admin Avatar"
+          class="rounded-circle me-2"
+          style="height: 40px; width: 40px;"
+        />
+        <span class="user-name">Admin User</span>
+      </a>
+      <ul
+        class="dropdown-menu dropdown-menu-end"
+        aria-labelledby="userDropdown"
+      >
+        <li>
+          <a class="dropdown-item" href="profile.php"
+            ><i class="fas fa-user me-2"></i> Profile</a
+          >
+        </li>
+        <li>
+          <a class="dropdown-item" href="settings.php"
+            ><i class="fas fa-cog me-2"></i> Settings</a
+          >
+        </li>
+        <li><hr class="dropdown-divider" /></li>
+        <li>
+          <a class="dropdown-item" href="index.php"
+            ><i class="fas fa-sign-out-alt me-2"></i> Logout</a
+          >
+        </li>
+      </ul>
+    </div>
+  </header>
 
-            
-
-<nav class="sidebar">
-    
-    <ul class="sidebar-menu">
-        <li>
-            <a href="dashboard.php">
-                <i class="fas fa-tachometer-alt"></i>
-                <span>Dashboard</span>
-            </a>
-        </li>
-        <li>
-            <a href="officials.php">
-                <i class="fas fa-users"></i>
-                <span>Barangay Officials</span>
-            </a>
-        </li>
-        <li>
-            <a href="documents.php">
-                <i class="fas fa-file-alt"></i>
-                <span>Requested Documents</span>
-                <span class="badge bg-danger float-end"></span>
-            </a>
-        </li>
-        <li>
-            <a href="residents.php">
-                <i class="fas fa-address-book"></i>
-                <span>Residents</span>
-            </a>
-        </li>
+  <nav id="sidebar" class="sidebar">
+    <ul class="list-unstyled">
+      <li>
+        <a href="dashboard.php" class="d-block py-2 px-3 text-dark"
+          ><i class="fas fa-home me-2"></i>Dashboard</a
+        >
+      </li>
+      <li>
+        <a href="residents.php" class="d-block py-2 px-3 text-dark"
+          ><i class="fas fa-users me-2"></i>Residents</a
+        >
+      </li>
+      <li>
+        <a href="documents.php" class="d-block py-2 px-3 text-dark"
+          ><i class="fas fa-file-alt me-2"></i>Requested Documents</a
+        >
+      </li>
+       <li>
+        <a href="officials.php" class="d-block py-2 px-3 text-dark"
+          ><i class="fas fa-person-alt me-2"></i>Officials List</a
+        >
+      </li>
     </ul>
-</nav>
-        </div>
-        <div class="user-info">
-            <div class="dropdown">
-                <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="assets/img/logo_balas.jpg" alt="Admin Avatar" class="rounded-circle mr-2" style="height: 32px;">
-                    <span class="user-name">Admin User</span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="profile.php"><i class="fas fa-user mr-2"></i> Profile</a>
-                    <a class="dropdown-item" href="settings.php"><i class="fas fa-cog mr-2"></i> Settings</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="index.php"><i class="fas fa-sign-out-alt mr-2"></i> Logout</a>
-                </div>
-            </div>
-        </div>
-    </header>
+  </nav>
 
-    <!-- ✅ Bootstrap 4 JS Bundle + jQuery + Popper.js -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const sidebar = document.getElementById("sidebar");
+      const toggleBtn = document.getElementById("sidebarToggle");
+
+      toggleBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("hidden");
+        document.body.classList.toggle("with-sidebar");
+      });
+
+      // Initialize sidebar shown by default on load
+      document.body.classList.add("with-sidebar");
+    });
+  </script>
 </body>
 </html>

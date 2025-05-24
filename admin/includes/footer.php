@@ -1,17 +1,14 @@
-<footer class="footer">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6">
-                <p class="mb-0">&copy; <?php echo date('Y'); ?> Barangay Balas. All rights reserved.</p>
-            </div>
-           
-        </div>
+<!--<footer>
+<div class="bg-dark text-white py-3">
+    <div class="container text-center small">
+      &copy; <?php echo date("Y"); ?> Barangay Balas, Mexico, Pampanga. All Rights Reserved. 
     </div>
-</footer>
-
-<!-- Bootstrap JS Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Custom JS -->
-<script src="assets/js/script.js"></script>
-</body>
-</html>
+  </div>
+  <div class="bg-dark text-white py-3">
+    <div class="container text-center small">
+        <div class="container text-center">
+        <p class="mb-0">Barangay Balas, Mexico, Pampanga</p>
+        <p class="mb-0">All Rights Reserved &copy; 2023</p>
+        <p class="mb-0">Developed by: Your Name</p> 
+        </div>
+</footer> -->

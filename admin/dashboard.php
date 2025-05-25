@@ -118,7 +118,6 @@ $pageTitle = "Dashboard";
                                     <th>Document Type</th>
                                     <th>Date Requested</th>
                                     <th>Status</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -127,11 +126,11 @@ $pageTitle = "Dashboard";
                                 require_once 'includes/db.php'; // Adjust path as needed
 
                                 // Query to get recent document requests, joining residents for full name
-                                $sql = "SELECT dr.residents_id, dr.document_id, dr.requested_at, dr.status, dr.request_code, CONCAT(r.first_name, ' ', r.last_name) AS resident_name, d.name AS document_type
+                                $sql = "SELECT dr.residents_id, dr.document_id, dr.request_date, dr.status, dr.queue_number, CONCAT(r.first_name, ' ', r.last_name) AS resident_name, d.name AS document_type
                                         FROM document_requests dr
                                         JOIN residents r ON dr.residents_id = r.residents_id
                                         JOIN document_types d ON dr.document_id = d.document_id
-                                        ORDER BY dr.requested_at DESC
+                                        ORDER BY dr.request_date DESC
                                         LIMIT 5";  // Show 5 most recent requests
 
                                 $result = $conn->query($sql);
@@ -155,16 +154,14 @@ $pageTitle = "Dashboard";
                                         }
 
                                         // Format date nicely 
-                                        $dateRequested = date('F j, Y', strtotime($row['requested_at']));
+                                        $dateRequested = date('F j, Y', strtotime($row['request_date']));
                                         echo '<tr>';
-                                        echo '<td>#' . htmlspecialchars($row['request_code']) . '</td>';
+                                        echo '<td>#' . htmlspecialchars($row['queue_number']) . '</td>';
                                         echo '<td>' . htmlspecialchars($row['resident_name']) . '</td>';
                                         echo '<td>' . htmlspecialchars($row['document_type']) . '</td>';
                                         echo '<td>' . $dateRequested . '</td>';
                                         echo '<td><span class="badge ' . $badgeClass . '">' . ucfirst($status) . '</span></td>';
-                                        echo '<td>
-                                                <a href="documents.php?id=' . $row['document_id'] . '" class="btn btn-sm btn-outline-primary">View</a>
-                                            </td>';
+                                       
                                         echo '</tr>';
                                     }
                                 } else {

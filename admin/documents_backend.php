@@ -1,15 +1,19 @@
-<?php 
-include 'includes/header.php'; 
-include 'includes/db.php';
+<?php
+// ✅ Turn on error reporting for debugging
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+include 'includes/db.php'; 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $action = $_POST['action'];
+    $action = $_POST['action'] ?? '';
 
     if ($action === 'fetch') {
-        $request_id = $_POST['request_id'];
+        $request_id = intval($_POST['request_id']);
 
-        $stmt = $conn->prepare("SELECT dr.request_code, dr.requested_at, dr.status, dr.remarks AS admin_notes, dr.purpose,
-                                       CONCAT(r.first_name, ' ', r.last_name) AS name, r.address, r.contact_number AS contact,
+        $stmt = $conn->prepare("SELECT dr.queue_number, dr.request_date, dr.status, dr.purpose,
+                                       CONCAT(r.first_name, ' ', r.last_name) AS name, r.address, r.contact AS contact,
                                        dt.name AS document_type
                                 FROM document_requests dr
                                 JOIN residents r ON dr.residents_id = r.residents_id
@@ -20,23 +24,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $result = $stmt->get_result();
         $data = $result->fetch_assoc();
 
-        echo json_encode(['success' => (bool) $data, 'data' => $data]);
-
+        echo json_encode(['success' => !!$data, 'data' => $data]);
         $stmt->close();
     }
 
     if ($action === 'update') {
-        $request_id = $_POST['request_id'];
+        $request_id = intval($_POST['request_id']);
         $status = $_POST['status'];
         $admin_notes = $_POST['admin_notes'];
 
-        $stmt = $conn->prepare("UPDATE document_requests SET status = ?, remarks = ?, processed_at = NOW() WHERE docrequests_id = ?");
+        $stmt = $conn->prepare("UPDATE document_requests SET status = ?, purpose = ? WHERE docrequests_id = ?");
         $stmt->bind_param("ssi", $status, $admin_notes, $request_id);
         $success = $stmt->execute();
 
         echo json_encode(['success' => $success]);
-
         $stmt->close();
     }
 }
-?>

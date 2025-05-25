@@ -35,7 +35,7 @@
 <!-- Form Section -->
 <div class="form-section">
   <div class="container">
-    <form id="documentRequests" action="indigency-generate.php" method="POST">
+    <form id="documentRequests" action="generate_documents.php" method="POST">
       <div class="row g-3">
 
         <!-- Full Name -->

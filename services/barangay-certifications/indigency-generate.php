@@ -13,7 +13,7 @@ $purpose = $_POST['purpose'];
 $sex = $_POST['sex'] ?? 'N/A';
 $email = $_POST['email'];
 $shipping_method = $_POST['shipping_method'];
-$requested_at = date('Y-m-d H:i:s');
+$request_date = date('Y-m-d H:i:s');
 
 // 1. Find resident ID securely
 $stmt = $conn->prepare("SELECT * FROM residents WHERE first_name=? AND middle_name=? AND last_name=? AND purok=? AND address=?");
@@ -22,7 +22,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows === 0) {
-    exit("Resident not found. Please make sure the resident exists in the database.");
+   echo  exit("Resident not found. Please make sure the resident exists in the database.");
 }
 $resident = $result->fetch_assoc();
 $residents_id = $resident['residents_id'];
@@ -30,9 +30,10 @@ $residents_id = $resident['residents_id'];
 // 2. Insert into document_requests securely
 $document_id = 1; // Assuming 1 corresponds to Indigency Certificate
 
-$insertStmt = $conn->prepare("INSERT INTO document_requests (residents_id, document_id, purpose, status, requested_at) VALUES (?, ?, ?, 'Pending', ?)");
-$insertStmt->bind_param("iiss", $residents_id, $document_id, $purpose, $requested_at);
+$insertStmt = $conn->prepare("INSERT INTO document_requests (residents_id, document_id, purpose, status, request_date) VALUES (?, ?, ?, 'Pending', ?)");
+$insertStmt->bind_param("iiss", $residents_id, $document_id, $purpose, $request_date);
 $insertStmt->execute();
+
 
 // 3. Instead of generating document now, just confirm request
 echo "Document request successfully submitted. It will be processed by the admin.";

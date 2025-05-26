@@ -1,5 +1,4 @@
 
-<?php include '..\..\includes\header.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,6 +41,7 @@
   </style>
 </head>
 <body>
+<?php include '../../includes/header.php'; ?>
 
 <!-- Hero Section -->
 <div class="hero-section">

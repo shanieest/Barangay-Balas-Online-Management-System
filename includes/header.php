@@ -67,7 +67,7 @@
   <!-- Main White Navbar -->
   <nav class="navbar navbar-expand-lg main-navbar sticky-top py-2">
     <div class="container">
-      <a class="navbar-brand d-flex align-items-center" href="index.php">
+      <a class="navbar-brand d-flex align-items-center" href="/barangay-balas/index.php">
         <img src="/barangay-balas/assets/img/balas-logo.png" alt="Logo" width="80" height="80" class="d-inline-block align-top mr-2">
         <span class="font-weight-bold">Barangay Balas<br><small>Mexico, Pampanga</small></span>
       </a>

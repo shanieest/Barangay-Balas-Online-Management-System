@@ -35,25 +35,24 @@
 <!-- Form Section -->
 <div class="form-section">
   <div class="container">
-    <form id="documentRequests" action="generate_documents.php" method="POST">
+    <form id="documentRequests" action="documents_request.php" method="POST">
       <div class="row g-3">
-
+        <input type="hidden" name="document_type" value="indigency">
         <!-- Full Name -->
-        <div class="col-md-4">
-          <input name="first_name" type="text" class="form-control" placeholder="First Name *" required>
+        <div class="col-md-6">
+          <input name="full_name" type="text" class="form-control" placeholder="Full Name *" required>
         </div>
-        <div class="col-md-4">
-          <input name="middle_name" type="text" class="form-control" placeholder="Middle Name *" >
-        </div>
-        <div class="col-md-4">
-          <input name="last_name" type="text" class="form-control" placeholder="Last Name *" required>
+
+        <div class="col-md-3 mb-12">
+          <label for="editBirthDate" class="form-label">Date of Birth</label>
+          <input type="date" class="form-control" id="BirthDate" name="dob">
         </div>
 
         <!-- Address -->
-        <div class="col-md-6">
+        <div class="col-md-4">
           <input name="address" type="text" class="form-control" placeholder="House No. *" required>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <input name="purok" type="text" class="form-control" placeholder="Purok *" required>
         </div>
 
@@ -78,10 +77,10 @@
         </div>
 
         <!-- Email and Shipping -->
-        <div class="col-md-4">
+        <div class="col-md-6">
           <input name="email" type="email" class="form-control" placeholder="Email *" required>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
           <select name="shipping_method" class="form-select" required>
             <option value="">Select Shipping Method *</option>
             <option value="Pick Up">Pick Up (Claim within 24 hrs from 10am–5pm)</option>
@@ -99,6 +98,10 @@
 
 <?php include '../../includes/foot.php'; ?>
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-<script>AOS.init();</script>
+<script>
+AOS.init();
+</script>
+
+
 </body>
 </html>

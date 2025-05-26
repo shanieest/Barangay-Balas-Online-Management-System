@@ -42,7 +42,7 @@ $pageTitle = "Residents Management";
                 <?php
                     require 'includes/db.php';
 
-                    $query = "SELECT * FROM residents WHERE status = 'Active' ORDER BY residents_id DESC";
+                    $query = "SELECT * FROM residents WHERE status = 'Active' ORDER BY id DESC";
                     $query_run = mysqli_query($conn, $query);
                 ?>
 
@@ -59,7 +59,6 @@ $pageTitle = "Residents Management";
                                     <th>Age</th>
                                     <th>Sex</th>
                                     <th>Civil Status</th>
-                                    <th>Blood Type</th>
                                     <th>Voter Status</th>
                                     <th>Resident Status</th>
                                     <th>Religion</th>
@@ -74,15 +73,14 @@ $pageTitle = "Residents Management";
                                 <?php if(mysqli_num_rows($query_run) > 0): ?>
                                     <?php while($resident = mysqli_fetch_assoc($query_run)): ?>
                                         <tr>
-                                            <td><?= $resident['residents_id']; ?></td>
-                                            <td><?= htmlspecialchars($resident['first_name'] . ' ' . $resident['middle_name'] . ' ' . $resident['last_name']); ?></td>
+                                            <td><?= $resident['id']; ?></td>
+                                            <td><?= htmlspecialchars($resident['full_name']); ?></td>
                                             <td><?= htmlspecialchars( 'Purok ' .$resident['purok'] . '  ' .$resident['address']); ?></td>
                                             <td><?= htmlspecialchars($resident['contact']); ?></td>
                                             <td><?= htmlspecialchars($resident['dob']); ?></td>
                                             <td><?= htmlspecialchars(calculateAge($resident['dob'])); ?></td>
                                             <td><?= htmlspecialchars($resident['sex']); ?></td>
                                             <td><?= htmlspecialchars($resident['civil_status']); ?></td>
-                                            <td><?= htmlspecialchars($resident['blood_type']); ?></td>
                                             <td><?= htmlspecialchars($resident['voter_status']); ?></td>
                                             <?php
                                                 $status = $resident['resident_status'];
@@ -122,20 +120,20 @@ $pageTitle = "Residents Management";
                                             <button class="btn btn-info btn-sm editResidentForm"
                                                 data-bs-toggle="modal" 
                                                 data-bs-target="#editResidentModal" 
-                                                data-id="<?= $resident['residents_id']; ?>">
+                                                data-id="<?= $resident['id']; ?>">
                                                 <i class="fas fa-edit"></i>
                                             </button>
 
                                                 <button class="btn btn-danger btn-sm" 
-                                                        data-id="<?= $resident['residents_id']; ?>" 
+                                                        data-id="<?= $resident['id']; ?>" 
                                                         data-bs-toggle="modal" 
-                                                        data-bs-target="#deleteResidentModal<?= $resident['residents_id']; ?>">
+                                                        data-bs-target="#deleteResidentModal<?= $resident['id']; ?>">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                                 <button class="btn btn-secondary btn-sm" 
-                                                        data-id="<?= $resident['residents_id']; ?>" 
+                                                        data-id="<?= $resident['id']; ?>" 
                                                         data-bs-toggle="modal" 
-                                                        data-bs-target="#viewResidentModal<?= $resident['residents_id']; ?>">
+                                                        data-bs-target="#viewResidentModal<?= $resident['id']; ?>">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
                                             </td>
@@ -185,84 +183,68 @@ $pageTitle = "Residents Management";
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <script>
-            $(document).on('submit', '#addResidentForm', function(e) {
-                e.preventDefault();
-                var formData = new FormData(this);
-                formData.append('add_resident', true);
-                $.ajax({
-                    type: 'POST',
-                    url: 'residents_backend.php',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        var res = JSON.parse(response);
-                        if (res.status == 'success') {
-                            $('#addResidentModal').modal('hide');
-                            $('#addResidentForm')[0].reset();
-                            alert(res.message);
-                            location.reload();
-                        } else {
-                            alert(res.message);
-                        }
-                        $('#residentTable').DataTable().ajax.reload();
-                    }
+       $(document).on('submit', '#addResidentForm', function(e) {
+    e.preventDefault();
+    var formData = new FormData(this);
+    formData.append('add_resident', true);
 
-                    
-                });
-            });
-
-            $(document).on('click', '.editResidentForm', function(e) {
-                e.preventDefault();
-                var resident_id = $(this).data('id');
-                //alert('Editing resident ID: ' + resident_id);
-                
-                 $.ajax({
-                    type: "GET",
-                    url: "residents_backend.php?resident_id=" + resident_id,
-                    success: function (response){
-                        var res = JSON.parse(response);
-                        if (res.status == 'success') {
-
-                             $('#editresident_id').val(res.data.id);
-                             $('#editLastName').val(res.data.last_name);
-                             $('#editFirstName').val(res.data.first_name);
-                             $('#editMiddleName').val(res.data.middle_name);
-                             $('#editBirthDate').val(res.data.dob);
-                             $('#editSex').val(res.data.sex);
-                             $('#editCivilStatus').val(res.data.civil_status);
-                             $('#editBloodType').val(res.data.blood_type);
-                             $('#editContactNumber').val(res.data.contact);
-                             $('#editAddress').val(res.data.address);
-                             $('#editPurok').val(res.data.purok);
-                             $('#editVoterStatus').val(res.data.voter_status);
-                             $('#editResidentStatus').val(res.data.resident_status);
-                             $('#editReligion').val(res.data.religion);
-                             $('#editEducation').val(res.data.education);
-                             $('#editIndigent').val(res.data.id);
-                             $('#edit4Ps').val(res.data.four_ps);
-                             $('#editMedicalHistory').val(res.data.medical_history);
-                             $('#editResidentModal').modal('show');
-                             $('#addResidentForm')[0].reset();
+    $.ajax({
+        type: 'POST',
+        url: 'residents_backend.php',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            var res = JSON.parse(response);
+            alert(res.message);
+            if (res.status === 'success') {
+                $('#addResidentModal').modal('hide');
+                $('#addResidentForm')[0].reset();
+                $('#residentTable').DataTable().ajax.reload();
+            }
+        }
+    });
+});
 
 
-                            alert(res.message);
-                            location.reload();
-                        } else {
-                            alert(res.message);
-                        }
-                        $('#residentTable').DataTable().ajax.reload();
-                    }
+// LOAD DATA INTO EDIT MODAL
+$(document).on('click', '.editResidentForm', function(e) {
+    e.preventDefault();
+    var resident_id = $(this).data('id');
 
-                 }
-            
-            );
-            });
+    $.ajax({
+        type: "POST",
+        url: "residents_backend.php?resident_id=" + resident_id,
+        success: function(response) {
+            var res = JSON.parse(response);
+            if (res.status === 'success') {
+                $('#editresident_id').val(res.data.id);
+                $('#editFullName').val(res.data.full_name);
+                $('#editBirthDate').val(res.data.dob);
+                $('#editSex').val(res.data.sex);
+                $('#editCivilStatus').val(res.data.civil_status);
+                $('#editContactNumber').val(res.data.contact);
+                $('#editAddress').val(res.data.address);
+                $('#editPurok').val(res.data.purok);
+                $('#editVoterStatus').val(res.data.voter_status);
+                $('#editResidentStatus').val(res.data.resident_status);
+                $('#editReligion').val(res.data.religion);
+                $('#editAge').val(res.data.age); 
+                $('#editEducation').val(res.data.education);
+                $('#editIndigent').val(res.data.indigent);
+                $('#edit4Ps').val(res.data.four_ps);
+                $('#editMedicalHistory').val(res.data.medical_history);
+                $('#editResidentModal').modal('show');
+            } else {
+                alert(res.message);
+            }
+        }
+    });
+});
 
 
+</script>
 
-            
-        </script>
     </body>
 </html>
 <?php include 'includes/footer.php'; ?>

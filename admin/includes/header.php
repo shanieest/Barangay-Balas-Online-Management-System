@@ -31,6 +31,7 @@
       transition: transform 0.3s ease;
       z-index: 1040;
       transform: translateX(0);
+      
     }
     .sidebar.hidden {
       transform: translateX(-100%);
@@ -123,34 +124,35 @@
   </header>
 
   <nav id="sidebar" class="sidebar">
-    <ul class="list-unstyled">
-      <li>
-        <a href="dashboard.php" class="d-block py-2 px-3 text-dark"
-          ><i class="fas fa-home me-2"></i>Dashboard</a
-        >
-      </li>
-      <li>
-        <a href="residents.php" class="d-block py-2 px-3 text-dark"
-          ><i class="fas fa-users me-2"></i>Residents</a
-        >
-      </li>
-      <li>
-        <a href="documents.php" class="d-block py-2 px-3 text-dark"
-          ><i class="fas fa-file-alt me-2"></i>Requested Documents</a
-        >
-      </li>
-       <li>
-        <a href="officials.php" class="d-block py-2 px-3 text-dark"
-          ><i class="fas fa-person-alt me-2"></i>Officials List</a
-        >
-      </li>
-      <li>
-        <a href="officials.php" class="d-block py-2 px-3 text-dark"
-          ><i class="fas fa-person-alt me-2"></i>News & Events</a
-        >
-      </li>
-    </ul>
-  </nav>
+  <ul class="list-unstyled">
+    <li>
+      <a href="dashboard.php" class="d-block py-2 px-3 text-dark text-decoration-none">
+        <i class="fas fa-home me-2"></i>Dashboard
+      </a>
+    </li>
+    <li>
+      <a href="residents.php" class="d-block py-2 px-3 text-dark text-decoration-none">
+        <i class="fas fa-users me-2"></i>Residents
+      </a>
+    </li>
+    <li>
+      <a href="documents.php" class="d-block py-2 px-3 text-dark text-decoration-none">
+        <i class="fas fa-file-alt me-2"></i>Requested Documents
+      </a>
+    </li>
+    <li>
+      <a href="officials.php" class="d-block py-2 px-3 text-dark text-decoration-none">
+        <i class="fas fa-person-alt me-2"></i>Officials List
+      </a>
+    </li>
+    <li>
+      <a href="announcements.php" class="d-block py-2 px-3 text-dark text-decoration-none">
+        <i class="fas fa-person-alt me-2"></i>News & Events
+      </a>
+    </li>
+  </ul>
+</nav>
+
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

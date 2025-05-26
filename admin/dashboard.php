@@ -126,12 +126,12 @@ $pageTitle = "Dashboard";
                                 require_once 'includes/db.php'; // Adjust path as needed
 
                                 // Query to get recent document requests, joining residents for full name
-                                $sql = "SELECT dr.residents_id, dr.document_id, dr.request_date, dr.status, dr.queue_number, CONCAT(r.first_name, ' ', r.last_name) AS resident_name, d.name AS document_type
+                                $sql = "SELECT dr.resident_id, dr.request_date, dr.status, dr.queue_number, dr.document_type, CONCAT(r.full_name) AS resident_name
                                         FROM document_requests dr
-                                        JOIN residents r ON dr.residents_id = r.residents_id
-                                        JOIN document_types d ON dr.document_id = d.document_id
+                                        JOIN residents r ON dr.resident_id = r.id
                                         ORDER BY dr.request_date DESC
-                                        LIMIT 5";  // Show 5 most recent requests
+                                        LIMIT 5";
+  // Show 5 most recent requests
 
                                 $result = $conn->query($sql);
 

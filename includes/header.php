@@ -157,7 +157,7 @@
             <a class="nav-link" href="#jobs">Jobs</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#news">News & Events</a>
+            <a class="nav-link" href="/barangay-balas/announcements.php">News & Events</a>
           </li>
         </ul>
       </div>

@@ -15,16 +15,8 @@
             <div class="card-body">
                 <div class="row">
                   <div class="col-md-4 mb-3">
-                    <label for="lastName" class="form-label">Last Name <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="lastName" name="lastname" >
-                  </div>
-                  <div class="col-md-4 mb-3">
-                    <label for="firstName" class="form-label">First Name <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="firstName" name="firstname" >
-                  </div>
-                  <div class="col-md-4 mb-3">
-                    <label for="middleName" class="form-label">Middle Name</label>
-                    <input type="text" class="form-control" id="middleName" name="middlename" >
+                    <label for="fullName" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="fullName" name="fullName" >
                   </div>
                 </div>
 
@@ -50,20 +42,6 @@
                       <option value="Married">Married</option>
                       <option value="Widowed">Widowed</option>
                       <option value="Separated">Separated</option>
-                    </select>
-                  </div>
-                  <div class="col-md-3 mb-3">
-                    <label for="bloodType" class="form-label">Blood Type</label>
-                    <select class="form-select" id="bloodtype" name="bloodtype">
-                      <option value="">Unknown</option>
-                      <option value="A+">A+</option>
-                      <option value="A-">A-</option>
-                      <option value="B+">B+</option>
-                      <option value="B-">B-</option>
-                      <option value="AB+">AB+</option>
-                      <option value="AB-">AB-</option>
-                      <option value="O+">O+</option>
-                      <option value="O-">O-</option>
                     </select>
                   </div>
                 </div>
@@ -177,7 +155,9 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="editResidentForm" class="form-horizontal" method="GET" action="residents_backend.php">
+        <form id="editResidentForm" class="form-horizontal" method="POST" action="residents_backend.php">
+          <input type="hidden" id="editresident_id" name="editresident_id">
+
 
           <div class="card">
             <div class="card-header">
@@ -186,16 +166,8 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-md-4 mb-3">
-                  <label for="editLastName" class="form-label">Last Name <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="editLastName" name="editLastName">
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label for="editFirstName" class="form-label">First Name <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="editFirstName" name="editFirstName">
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label for="editMiddleName" class="form-label">Middle Name</label>
-                  <input type="text" class="form-control" id="editMiddleName" name="editMiddleName">
+                  <label for="editFullName" class="form-label">Full Name</label>
+                  <input type="text" class="form-control" id="editFullName" name="editFullName">
                 </div>
               </div>
 
@@ -221,20 +193,6 @@
                     <option value="Married">Married</option>
                     <option value="Widowed">Widowed</option>
                     <option value="Separated">Separated</option>
-                  </select>
-                </div>
-                <div class="col-md-3 mb-3">
-                  <label for="editBloodType" class="form-label">Blood Type</label>
-                  <select class="form-select" id="editBloodType" name="editBloodType">
-                    <option value="">Unknown</option>
-                    <option value="A+">A+</option>
-                    <option value="A-">A-</option>
-                    <option value="B+">B+</option>
-                    <option value="B-">B-</option>
-                    <option value="AB+">AB+</option>
-                    <option value="AB-">AB-</option>
-                    <option value="O+">O+</option>
-                    <option value="O-">O-</option>
                   </select>
                 </div>
               </div>

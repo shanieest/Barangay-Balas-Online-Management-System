@@ -1,19 +1,15 @@
 <?php
-
 require 'includes/db.php';
 
+// ADD RESIDENT
 if (isset($_POST['add_resident'])) {
-
-    $lastname = mysqli_real_escape_string($conn, $_POST['lastname']);
-    $firstname = mysqli_real_escape_string($conn, $_POST['firstname']);
-    $middlename = mysqli_real_escape_string($conn, $_POST['middlename']);
+    $fullName = mysqli_real_escape_string($conn, $_POST['fullName']);
     $address = mysqli_real_escape_string($conn, $_POST['address']);
     $contact = mysqli_real_escape_string($conn, $_POST['contact']);
     $dateofbirth = mysqli_real_escape_string($conn, $_POST['dateofbirth']);
     $sex = mysqli_real_escape_string($conn, $_POST['sex']);
     $civilstatus = mysqli_real_escape_string($conn, $_POST['civilstatus']);
     $age = mysqli_real_escape_string($conn, $_POST['age']);
-    $bloodtype = mysqli_real_escape_string($conn, $_POST['bloodtype']);
     $purok = mysqli_real_escape_string($conn, $_POST['purok']);
     $voterstatus = mysqli_real_escape_string($conn, $_POST['voterstatus']);
     $residentstatus = mysqli_real_escape_string($conn, $_POST['residentstatus']);
@@ -23,140 +19,89 @@ if (isset($_POST['add_resident'])) {
     $four_ps = mysqli_real_escape_string($conn, $_POST['four_ps']);
     $medhistory = mysqli_real_escape_string($conn, $_POST['medhistory']);
 
-    if (
-        empty($lastname) ||
-        empty($firstname) ||
-        empty($dateofbirth) ||
-        empty($sex) ||
-        empty($address)
-    ) {
-        $res = [
-            'status' => 'error',
-            'message' => 'Please fill in all required fields.'
-        ];
-        echo json_encode($res);
+    if (empty($fullName) || empty($dateofbirth) || empty($sex) || empty($address)) {
+        echo json_encode(['status' => 'error', 'message' => 'Please fill in all required fields.']);
         return;
     }
 
-    $query = "INSERT INTO `residents`(
-        `residents_id`, `first_name`, `middle_name`, `last_name`, `address`, `contact`, `dob`, 
-        `sex`, `civil_status`, `blood_type`, `purok`, `voter_status`, `resident_status`, 
-        `religion`, `education`, `indigent`, `four_ps`, `medical_history`, `status`
+    $query = "INSERT INTO residents (
+        full_name, address, contact, dob, sex, civil_status, age, purok, 
+        voter_status, resident_status, religion, education, indigent, four_ps, 
+        medical_history, status
     ) VALUES (
-        NULL, '$firstname', '$middlename', '$lastname', '$address', '$contact', '$dateofbirth',
-        '$sex', '$civilstatus', '$bloodtype', '$purok', '$voterstatus', '$residentstatus',
-        '$religion', '$educAttain', '$indigent', '$four_ps', '$medhistory', 'Active'
+        '$fullName', '$address', '$contact', '$dateofbirth', '$sex', '$civilstatus', 
+        '$age', '$purok', '$voterstatus', '$residentstatus', '$religion', 
+        '$educAttain', '$indigent', '$four_ps', '$medhistory', 'Active'
     )";
 
-    $query_run = mysqli_query($conn, $query);
+    $run = mysqli_query($conn, $query);
 
-    if ($query_run) {
-        $res = [
-            'status' => 'success',
-            'message' => 'Resident added successfully.'
-        ];
-    } else {
-        $res = [
-            'status' => 'error',
-            'message' => 'Error adding resident: ' . mysqli_error($conn)
-        ];
-    }
-
-    echo json_encode($res);
+    echo json_encode([
+        'status' => $run ? 'success' : 'error',
+        'message' => $run ? 'Resident added successfully.' : 'Error: ' . mysqli_error($conn)
+    ]);
+    return;
 }
 
-if(isset($_GET['resident_id']))
-{
-    $resident_id - mysqli_real_escape_string($conn, $_GET['resident_id']);
 
-    $query = "SELECT * FROM residents WHERE residents_id='$resident_id'";
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['resident_id'])) {
+    $resident_id = intval($_GET['resident_id']);
 
-    $query_run = mysqli_query($conn, $query);
+    $stmt = $conn->prepare("SELECT * FROM residents WHERE id = ?");
+    $stmt->bind_param("i", $resident_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    if(mysqli_num_rows($query_run) == 1)
-    {
-        $resident = mysqli_fetch_array($query_run);
-        $res = [
+    if ($result && $result->num_rows > 0) {
+        $resident = $result->fetch_assoc();
+        echo json_encode([
             'status' => 'success',
-            'message' => 'Resident found.',
             'data' => $resident
-        ];
-        echo json_encode($res);
-        return;
-    }
-    else
-    {
-        $res = [
+        ]);
+    } else {
+        echo json_encode([
             'status' => 'error',
-            'message' => 'No resident found.'
-        ];
-        echo json_encode(['status' => 'error', 'message' => 'No resident found.']);
+            'message' => 'Resident not found.'
+        ]);
     }
+    exit();
 }
 
-if (isset($_GET['editFirstName'])) {
-    $id = $_GET['editresident_id'] ?? null;
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editresident_id'])) {
+    $id = intval($_POST['editresident_id']);
+    $full_name = $_POST['editFullName'];
+    $dob = $_POST['editBirthDate'];
+    $sex = $_POST['editSex'];
+    $civil_status = $_POST['editCivilStatus'];
+    $contact = $_POST['editContactNumber'];
+    $address = $_POST['editAddress'];
+    $purok = $_POST['editPurok'];
+    $voter_status = $_POST['editVoterStatus'];
+    $resident_status = $_POST['editResidentStatus'];
+    $religion = $_POST['editReligion'];
+    $age = $_POST['editAge'];
+    $education = $_POST['editEducation'];
+    $indigent = $_POST['editIndigent'];
+    $four_ps = $_POST['edit4Ps'];
+    $medical_history = $_POST['editMedicalHistory'];
 
-    $first_name = $_GET['editFirstName'];
-    $middle_name = $_GET['editMiddleName'];
-    $last_name = $_GET['editLastName'];
-    $dob = $_GET['editBirthDate'];
-    $sex = $_GET['editSex'];
-    $civil_status = $_GET['editCivilStatus'];
-    $blood_type = $_GET['editBloodType'];
-    $contact = $_GET['editContactNumber'];
-    $address = $_GET['editAddress'];
-    $purok = $_GET['editPurok'];
-    $voter_status = $_GET['editVoterStatus'];
-    $resident_status = $_GET['editResidentStatus'];
-    $religion = $_GET['editReligion'];
-    $education = $_GET['editEducation'];
-    $indigent = $_GET['editIndigent'];
-    $four_ps = $_GET['edit4Ps'];
-    $medical_history = $_GET['editMedicalHistory'];
+    $stmt = $conn->prepare("UPDATE residents SET 
+        full_name=?, dob=?, sex=?, civil_status=?, contact=?, address=?, purok=?, 
+        voter_status=?, resident_status=?, religion=?, age=?, education=?, indigent=?, 
+        four_ps=?, medical_history=? 
+        WHERE id=?");
 
-    $sql = "UPDATE residents SET 
-        first_name = ?, middle_name = ?, last_name = ?, dob = ?, sex = ?, civil_status = ?, blood_type = ?, 
-        contact = ?, address = ?, purok = ?, voter_status = ?, resident_status = ?, religion = ?, education = ?, 
-        indigent = ?, four_ps = ?, medical_history = ?
-        WHERE id = ?";
-
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param(
-        "sssssssssssssssssi",
-        $first_name, $middle_name, $last_name, $dob, $sex, $civil_status, $blood_type,
-        $contact, $address, $purok, $voter_status, $resident_status, $religion, $education,
+    $stmt->bind_param("ssssssssssissssi", 
+        $full_name, $dob, $sex, $civil_status, $contact, $address, $purok,
+        $voter_status, $resident_status, $religion, $age, $education,
         $indigent, $four_ps, $medical_history, $id
     );
 
     if ($stmt->execute()) {
-        echo json_encode(["status" => "success", "message" => "Resident updated successfully."]);
+        header("Location: residents.php?success=1");
+        exit();
     } else {
-        echo json_encode(["status" => "error", "message" => "Update failed."]);
+        echo "Error updating record: " . $stmt->error;
     }
-
-    $stmt->close();
 }
-
-// Fetch data for edit modal (AJAX)
-if (isset($_GET['resident_id'])) {
-    $resident_id = $_GET['resident_id'];
-    $sql = "SELECT * FROM residents WHERE residents_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $resident_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $resident = $result->fetch_assoc();
-
-    if ($resident) {
-        echo json_encode(["status" => "success", "data" => $resident]);
-    } else {
-        echo json_encode(["status" => "error", "message" => "Resident not found."]);
-    }
-
-    $stmt->close();
-}
-
-$conn->close();
-
 ?>

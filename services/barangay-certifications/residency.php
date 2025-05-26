@@ -1,5 +1,4 @@
-
-<?php include '..\..\includes\header.php'; ?>
+<?php include '../../includes/header.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,31 +6,16 @@
   <title>Barangay Balas - Residency Certification</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-
   <style>
     .hero-section {
-      /*background: url('your-hero-image.jpg') center center/cover no-repeat;*/
-      background: linear-gradient(to right, #0033cc 0%, #990000 97%);      color: white;
+      background: linear-gradient(to right, #0033cc 0%, #990000 97%);
+      color: white;
       padding: 100px 20px;
       text-align: center;
     }
     .form-section {
       padding: 40px 20px;
       background-color: #f8f9fa;
-    }
-    .services-section {
-      padding: 40px 20px;
-      background-color: #1a1a1a;
-      color: white;
-    }
-    .service-box {
-      background-color: #003366;
-      color: black;
-      border-radius: 10px;
-      padding: 30px 15px;
-      text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
     }
     .service-box:hover {
       background-color:  #f8f9fa;
@@ -49,55 +33,75 @@
 </div>
 
 <!-- Form Section -->
-<div class="form-section ">
-  <form>
-    <div class="row g-3">
-      <div class="col-md-4">
-        <input type="text" class="form-control" placeholder="First Name *">
+<div class="form-section">
+  <div class="container">
+    <form id="documentRequests" action="documents_request.php" method="POST">
+      <div class="row g-3">
+        <input type="hidden" name="document_type" value="residency">
+        <!-- Full Name -->
+        <div class="col-md-6">
+          <input name="full_name" type="text" class="form-control" placeholder="Full Name *" required>
+        </div>
+
+        <div class="col-md-3 mb-12">
+          <label for="editBirthDate" class="form-label">Date of Birth</label>
+          <input type="date" class="form-control" id="BirthDate" name="dob">
+        </div>
+
+        <!-- Address -->
+        <div class="col-md-4">
+          <input name="address" type="text" class="form-control" placeholder="House No. *" required>
+        </div>
+        <div class="col-md-4">
+          <input name="purok" type="text" class="form-control" placeholder="Purok *" required>
+        </div>
+
+        <!-- Personal Info -->
+        <div class="col-md-4">
+          <input name="age" type="number" class="form-control" placeholder="Age *" required>
+        </div>
+        <div class="col-md-4">
+          <input name="civil_status" type="text" class="form-control" placeholder="Civil Status *" required>
+        </div>
+        <div class="col-md-4">
+          <select name="sex" class="form-select" required>
+            <option value="">Select Gender *</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+
+        <!-- Purpose -->
+        <div class="col-md-4">
+          <input name="purpose" type="text" class="form-control" placeholder="Purpose *" required>
+        </div>
+
+        <!-- Email and Shipping -->
+        <div class="col-md-6">
+          <input name="email" type="email" class="form-control" placeholder="Email *" required>
+        </div>
+        <div class="col-md-6">
+          <select name="shipping_method" class="form-select" required>
+            <option value="">Select Shipping Method *</option>
+            <option value="Pick Up">Pick Up (Claim within 24 hrs from 10am–5pm)</option>
+            <option value="Delivery">Deliver (charge applies)</option>
+          </select>
+        </div>
       </div>
-      <div class="col-md-4">
-        <input type="text" class="form-control" placeholder="Middle Name *">
+
+      <div class="text-center mt-4">
+        <button type="submit" form="documentRequests" class="btn btn-primary px-5">Send Request</button>
       </div>
-      <div class="col-md-4">
-        <input type="text" class="form-control" placeholder="Last Name *">
-      </div>
-      <div class="col-md-6">
-        <input type="text" class="form-control" placeholder="House No. *">
-      </div>
-      <div class="col-md-6">
-        <input type="text" class="form-control" placeholder="Purok *">
-      </div>
-      <div class="col-md-4">
-        <input type="number" class="form-control" placeholder="Age *">
-      </div>
-      <div class="col-md-4">
-        <input type="text" class="form-control" placeholder="Civil Status *">
-      </div>
-      <div class="col-md-4">
-        <input type="text" class="form-control" placeholder="Purpose *">
-      </div>
-      <div class="col-md-4">
-        <input type="email" class="form-control" placeholder="Email *">
-      </div>
-      <div class="col-md-8">
-        <label for="shipping" class="form-label">Shipping Method *</label>
-        <select class="form-select" aria-label="Default select example">
-          <option selected>Pick Up (Claim within 24 hrs from 10am–5pm)</option>
-          <option>Deliver (charge)</option>
-        </select>
-      </div>
-    </div>
-    <div class="text-center mt-4">
-      <button type="submit" class="btn btn-primary px-5">Send</button>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>
 
- <?php include '..\..\includes\foot.php'; ?>
- <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<?php include '../../includes/foot.php'; ?>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <script>
-  AOS.init();
+AOS.init();
 </script>
+
 
 </body>
 </html>

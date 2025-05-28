@@ -64,7 +64,7 @@ include 'includes/header.php';
                                     <th>Queue No.</th>
                                     <th>Resident</th>
                                     <th>Document Type</th>
-                                    <th>Date Requested</th>
+                                    <th>Date & Time Requested</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
@@ -83,7 +83,7 @@ include 'includes/header.php';
                                     <th>Queue No.</th>
                                     <th>Resident</th>
                                     <th>Document Type</th>
-                                    <th>Date Requested</th>
+                                    <th>Date & Time Requested</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
@@ -102,7 +102,7 @@ include 'includes/header.php';
                                     <th>Queue No.</th>
                                     <th>Resident</th>
                                     <th>Document Type</th>
-                                    <th>Date Requested</th>
+                                    <th>Date & Time Requested</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
@@ -121,7 +121,7 @@ include 'includes/header.php';
                                     <th>Queue No.</th>
                                     <th>Resident</th>
                                     <th>Document Type</th>
-                                    <th>Date Requested</th>
+                                    <th>Date & Time Requested</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
@@ -147,7 +147,7 @@ include 'includes/header.php';
                         <div class="col-md-6">
                             <h6>Request Information</h6>
                             <p><strong>Queue No.:</strong> <span id="modalQueueNumber">#</span></p>
-                            <p><strong>Date Requested:</strong> <span id="modalDateRequested"></span></p>
+                            <p><strong>Date & Time Requested:</strong> <span id="modalDateRequested"></span></p>
                             <p><strong>Document Type:</strong> <span id="modalDocumentType"></span></p>
                             <p><strong>Purpose:</strong> <span id="modalPurpose"></span></p>
                         </div>

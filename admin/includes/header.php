@@ -142,14 +142,15 @@
     </li>
     <li>
       <a href="officials.php" class="d-block py-2 px-3 text-dark text-decoration-none">
-        <i class="fas fa-person-alt me-2"></i>Officials List
+        <i class="fas fa-user me-2"></i>Officials List
       </a>
     </li>
     <li>
       <a href="announcements.php" class="d-block py-2 px-3 text-dark text-decoration-none">
-        <i class="fas fa-person-alt me-2"></i>News & Events
+        <i class="fas fa-bullhorn me-2"></i>News & Events
       </a>
-    </li>
+</li>
+
   </ul>
 </nav>
 

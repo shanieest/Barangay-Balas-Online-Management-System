@@ -116,7 +116,7 @@ $pageTitle = "Dashboard";
                                     <th>Request ID</th>
                                     <th>Resident Name</th>
                                     <th>Document Type</th>
-                                    <th>Date Requested</th>
+                                    <th>Date & Time Requested</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>

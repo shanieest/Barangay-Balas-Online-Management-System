@@ -40,11 +40,11 @@
       <div class="row g-3">
         <input type="hidden" name="document_type" value="residency">
         <!-- Full Name -->
-        <div class="col-md-6">
+        <div class="col-md-12">
           <input name="full_name" type="text" class="form-control" placeholder="Full Name *" required>
         </div>
 
-        <div class="col-md-3 mb-12">
+        <div class="col-md-12">
           <label for="editBirthDate" class="form-label">Date of Birth</label>
           <input type="date" class="form-control" id="BirthDate" name="dob">
         </div>
